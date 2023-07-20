@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" modified="2023-07-20T13:09:32.052Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="7VTecI7Vu5aJYLYxR1dL" version="21.6.1" type="device">
+  <diagram name="Página-1" id="Wi7kB-ZkWlvhSVouxDNI">
+    <mxGraphModel dx="2474" dy="1151" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="g2uXr44B1JOil9DpYNaX-5" value="&lt;div&gt;ADP Server&lt;/div&gt;&lt;div&gt;/process&lt;br&gt;&lt;/div&gt;" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#000000;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.transfer_for_ftp_resource;" parent="1" vertex="1">
+          <mxGeometry x="230" y="340" width="76" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-7" value="rota:apdata-file-process-kafka" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Apache_Camel_Logo.svg/1280px-Apache_Camel_Logo.svg.png;" parent="1" vertex="1">
+          <mxGeometry x="30" y="250.00000000000006" width="180" height="52.2" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-8" value="tópico: file.apdata" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.ovhcloud.com/sites/default/files/styles/text_media_horizontal/public/2021-09/ECX-1909_Hero_Kafka_600x400%402x-1.png;" parent="1" vertex="1">
+          <mxGeometry x="-130" y="427" width="170" height="65.75" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-10" value="rota:apdata-file-process-fileserver" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Apache_Camel_Logo.svg/1280px-Apache_Camel_Logo.svg.png;" parent="1" vertex="1">
+          <mxGeometry x="348" y="250.00000000000006" width="180" height="52.2" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-12" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="330" as="sourcePoint" />
+            <mxPoint x="230" y="379" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="120" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-14" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" parent="1" target="g2uXr44B1JOil9DpYNaX-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="330" as="sourcePoint" />
+            <mxPoint x="238" y="499" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="120" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-17" value="&lt;div&gt;ADP Server&lt;/div&gt;&lt;div&gt;/processed&lt;br&gt;&lt;/div&gt;" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#000000;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.transfer_for_ftp_resource;" parent="1" vertex="1">
+          <mxGeometry x="230" y="507" width="76" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-18" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=default;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="330" as="sourcePoint" />
+            <mxPoint x="230" y="549" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="120" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-19" value="1 - get" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="135" y="350" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-20" value="2 - put content" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="20" y="470" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-21" value="3 - move" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="136" y="520" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-23" value="file" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://images.freeimages.com/fic/images/icons/1579/devine/256/file.png;" parent="1" vertex="1">
+          <mxGeometry x="70" y="361" width="36" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-25" value="1 - get" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="340" y="500" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-26" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="340" as="sourcePoint" />
+            <mxPoint x="530" y="460" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-27" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=default;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="330" as="sourcePoint" />
+            <mxPoint x="310" y="530" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-29" value="file" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://images.freeimages.com/fic/images/icons/1579/devine/256/file.png;" parent="1" vertex="1">
+          <mxGeometry x="380" y="361" width="36" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-30" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=default;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="330" as="sourcePoint" />
+            <mxPoint x="310" y="590" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-31" value="3 - delete" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="344" y="560" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-32" value="2 - download file" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="430" y="470" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g2uXr44B1JOil9DpYNaX-33" value="File Server" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="535" y="430" width="60" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
