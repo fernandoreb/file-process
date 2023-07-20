@@ -145,7 +145,7 @@ endpoints.health.enabled = true
 management.security.enabled=false
 management.endpoints.web.exposure.include=hawtio,jolokia
 hawtio.authenticationEnabled=false
-endpoints.jolokia.sensitive = false
+endpoints.jolokia.sensitive = false~
 spring.jmx.enabled=true
 ~~~
 
@@ -195,6 +195,49 @@ ftp.strictHostKeyChecking=${FTP_STRICT_HOST_KEY_CHECKING:no}
 scheduler.cron.expression=${FTP_CRON_EXPRESSION:*/5 * * * * ?}
 ~~~
 
+### Implementação das Rotas
+
+Toda a implementção encontra-se no arquivo *APDataFileProcessRoute.java* e resume-se a:
+
+* Rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
+~~~
+//rota: ftp pasta processar -> posta conteúdo no kafka -> move arquivo para pasta processado no ftp
+from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.toprocess}}?"+ //1 - leitura de arquivos do ftp
+     "password={{ftp.password}}&"+
+     "knownHostsFile={{ftp.known_hosts}}&strictHostKeyChecking={{ftp.strictHostKeyChecking}}&"+
+     "scheduler=quartz&scheduler.cron={{scheduler.cron.expression}}&"+ // uso do componente scheduler para agendamento via cron
+     "move={{ftp.directory.move}}") // 3 - esta opção moverá o arquivo quando a rota finalizar.
+     .routeId("apdata-file-process-kafka")
+     .log("apdata-file-process - envio kafka iniciado")
+     .log("apdata-file-process - envio kafka arquivo a processar: ${header.CamelFileName}")
+     .log("apdata-file-process - envio kafka enviando para tópico: {{topic.name.producer}}")
+     .to("kafka:{{topic.name.producer}}?brokers={{kafka.bootstrap-servers}}" + //2 - envio para tópico do kafka
+     "&securityProtocol={{kafka.security.protocol}}" +
+     "&saslMechanism={{kafka.producer.properties.sasl.mechanism}}" +
+     "&sslTruststoreLocation={{kafka.producer.ssl.trust-store-location}}" +
+     "&sslTruststorePassword={{kafka.producer.ssl.trust-store-password}}" +
+     "&sslTruststoreType={{kafka.producer.ssl.trust-store-type}}" +
+     "&saslJaasConfig={{kafka.producer.properties.sasl.jaas.config}}")
+     .log("apdata-file-process - envio kafka finalizado");
+~~~
+
+* Rota que realiza a leitura do diretório FTP com os arquivos que foram movidos pela rota anterior e faz o download para uma pasta local. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
+~~~
+        //rota: ftp pasta processado -> download para diretório -> remove arquivo da pasta processado do ftp     
+from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.processed}}?"+ //1 - leitura de arquivos do ftp
+     "password={{ftp.password}}&"+
+     "knownHostsFile={{ftp.known_hosts}}&strictHostKeyChecking={{ftp.strictHostKeyChecking}}&"+
+     "scheduler=quartz&scheduler.cron={{scheduler.cron.expression}}&"+ // uso do componente scheduler para agendamento via cron
+     "delete=true") // 3 - esta opção removerá o arquivo quando a rota finalizar.
+     .routeId("apdata-file-process-fileserver")
+     .log("apdata-file-process - envio fileserver iniciado")
+     .log("apdata-file-process - envio fileserver arquivo a processar: ${header.CamelFileName}")
+     .log("apdata-file-process - envio fileserver enviando arquivo ${header.CamelFileName} para diretório: {{file.directory}}")
+              .to("file:{{file.directory}}") // 2 - envio do arquivo para um diretório 
+              .log("apdata-file-process - envio fileserver arquivo processado: ${header.CamelFileName}") 
+              .log("apdata-file-process - envio fileserver finalizado");
+~~~
+
  ### Executando local   
 
 Basta utilizar o próprio maven.   
@@ -205,8 +248,7 @@ mvn spring-boot:run
 
 ## Montando a Solução no Openshift
 
-Uma estratégia utilizando S2I e build via docker foi utilizada para provisionar a aplicação.  
-
+Uma estratégia utilizando S2I e build via docker foi utilizada para provisionar a aplicação em um cluster openshift.  
 
 ### Criar o projeto abaixo:
 ~~~
