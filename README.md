@@ -10,7 +10,7 @@ Esta aplicação implementa duas rotas Camel, de acordo com as regras abaixo:
 
 Foi adicionado um parâmetro de scheduler com um cron para agendamento da leitura de cada rota sobre o FTP.
 
-## Tenologias
+## Tecnologias
 
 Versão java utilizada:   
 ~~~
