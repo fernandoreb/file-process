@@ -6,7 +6,6 @@ Esta aplicação implementa duas rotas Camel, de acordo com as regras abaixo:
 
 2. Buscar arquivos na pasta de processados do FTP, fazer o download em um diretório e remover o arquivo do FTP.  
 
-**Visão Geral da Solução**
 ![architecture](./assets/01.png)
 
 ## Execução local
@@ -23,22 +22,20 @@ Versão do maven utilizada:
 Apache Maven 3.8.6
 ~~~
    
-### Passos
-
-#### Remover, se houver, os certificados e keystore antigos
+### Remover, se houver, os certificados e keystore antigos
 ~~~
 rm file-process/ca.crt
 rm file-process/truststore.jks
 ~~~
    
-#### Criar uma keystore adicionando o certificado do cluster (substituir o nome da secret e namespace se necessário)
+### Criar uma keystore adicionando o certificado do cluster (substituir o nome da secret e namespace se necessário)
 ~~~
 cd file-process
 oc extract -n infra-amqstreams secret/amq-streams-sample-cluster-ca-cert --keys=ca.crt --to=- > ca.crt
 keytool -import -trustcacerts -alias root -file ca.crt -keystore truststore.jks -storepass password -noprompt
 ~~~
 
-#### Criar o tópico abaixo, se não houver. Lembrando de substituir as configurações se necessário.  
+### Criar o tópico abaixo, se não houver. Lembrando de substituir as configurações se necessário.  
 ~~~
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
@@ -57,14 +54,14 @@ spec:
   topicName: file.apdata
 ~~~
 
-#### Rodando um FTP local.   
+### Rodando um FTP local.   
 Será criado um sftp com o usuário foo, senha pass e pasta raiz do usuário apdata.   
 ~~~
 podman run --rm -p 2222:22 atmoz/sftp foo:pass:::apdata
 sftp -P 2222 foo@localhost
 ~~~
 
-#### Criar as pastas para os arquivos a processar e processados no FTP.   
+### Criar as pastas para os arquivos a processar e processados no FTP.   
 A aplicação está esperando as estruturas:   
 ~~~
 Arquivos a processar: apdata/process
@@ -79,8 +76,7 @@ sftp> mkdir process
 sftp> mkdir processed
 ~~~
 
-#### Upload de exemplos para o FTP. (ajustar o caminho de acordo com o path local)   
-
+### Upload de exemplos para o FTP. (ajustar o caminho de acordo com o path local)   
 Na pasta *arquivos-exemplo* há uma lista de arquivos para demonstrar a aplicação.
 *observação: ajustar o caminho de acordo com a localização do projeto localmente.*    
 ~~~
@@ -89,7 +85,7 @@ sftp> cd process
 sftp> put /home/fguimara/Fernando/projects/repos/bmb/apdata/file-process/arquivos-exemplo/*
 ~~~
 
-#### Componentes Camel utilizados.
+### Componentes Camel utilizados.
 
 Basicamente os componentes abaixo foram utilizados:
 
@@ -105,7 +101,7 @@ Documentação: https://camel.apache.org/components/3.20.x/kafka-component.html
 Compoennte para acesso ao Sistema de Arquivos.      
 Documentação: https://camel.apache.org/components/next/ftp-component.html   
 
-#### Parametrizações
+### Parametrizações
 
 
 ## Kakfa properties
