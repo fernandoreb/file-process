@@ -24,12 +24,12 @@ Versão do maven utilizada:
 Apache Maven 3.8.6
 ~~~
 
-Camel   
+Camel:   
 ~~~
 3.14.2.redhat-00054
 ~~~
 
-Spring Boot   
+Spring Boot:   
 ~~~
 2.7.12
 ~~~
