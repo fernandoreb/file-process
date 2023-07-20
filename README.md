@@ -8,6 +8,8 @@ Esta aplicação implementa duas rotas Camel, de acordo com as regras abaixo:
 
 ![architecture](./assets/01.png)
 
+Foi adicionado um parâmetro de scheduler com um cron para agendamento da leitura de cada rota sobre o FTP.
+
 ## Execução local
 
 Versão java utilizada:   
@@ -137,7 +139,7 @@ server.port=8082
 
 # lets use a different management port in case you need to listen to HTTP requests on 8080
 management.server.port=8083
-
+apdata-file-process-fileserver
 # disable all management endpoints except health
 endpoints.enabled = false
 endpoints.health.enabled = true
@@ -145,7 +147,7 @@ endpoints.health.enabled = true
 management.security.enabled=false
 management.endpoints.web.exposure.include=hawtio,jolokia
 hawtio.authenticationEnabled=false
-endpoints.jolokia.sensitive = false~
+endpoints.jolokia.sensitive = false
 spring.jmx.enabled=true
 ~~~
 
@@ -191,6 +193,11 @@ ftp.directory.move=${FTP_DIRECTORY_MOVE:../processed}
 ftp.directory.processed=${FTP_DIRECTORY_PROCESSED:apdata/processed}
 ftp.known_hosts=${FTP_KNOWN_HOSTS_PATH:/home/fguimara/.ssh/known_hosts}
 ftp.strictHostKeyChecking=${FTP_STRICT_HOST_KEY_CHECKING:no}
+~~~
+
+Parametrização do cron para a execução das rotas.   
+
+~~~
 # CronTab
 scheduler.cron.expression=${FTP_CRON_EXPRESSION:*/5 * * * * ?}
 ~~~
@@ -199,7 +206,7 @@ scheduler.cron.expression=${FTP_CRON_EXPRESSION:*/5 * * * * ?}
 
 Toda a implementção encontra-se no arquivo *APDataFileProcessRoute.java* e resume-se a:
 
-* **apdata-file-process-kafka** - rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
+* **apdata-file-process-kafka** - rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso.   
 ~~~
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.toprocess}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
@@ -236,7 +243,9 @@ from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directo
               .log("apdata-file-process - envio fileserver finalizado");
 ~~~
 
- ### Executando local   
+Em ambas as rotas, um scheduler foi definido: "scheduler=quartz&scheduler.cron={{scheduler.cron.expression}}&", com a parametrização de tempo em arquivo de propriedade.   
+
+### Executando local   
 
 Basta utilizar o próprio maven.   
 
