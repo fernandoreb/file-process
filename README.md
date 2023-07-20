@@ -1,4 +1,4 @@
-# Camel Usando Kafka, file e FTP com Spring Boot
+# Aplicação exemplo utilizando camel para acesso a um FTP Server, produção de dados em um tópico e escrita em arquivos
 
 Esta aplicação implementa duas rotas Camel, de acordo com as regras abaixo:  
 
@@ -10,7 +10,7 @@ Esta aplicação implementa duas rotas Camel, de acordo com as regras abaixo:
 
 Foi adicionado um parâmetro de scheduler com um cron para agendamento da leitura de cada rota sobre o FTP.
 
-## Execução local
+## Tenologias
 
 Versão java utilizada:   
 ~~~
@@ -22,6 +22,16 @@ OpenJDK 64-Bit Server VM (Red_Hat-11.0.16.0.8-1.el7openjdkportable) (build 11.0.
 Versão do maven utilizada:   
 ~~~
 Apache Maven 3.8.6
+~~~
+
+Camel   
+~~~
+3.14.2.redhat-00054
+~~~
+
+Spring Boot   
+~~~
+2.7.12
 ~~~
  
 ### keystore com o certificado do cluster
@@ -206,7 +216,7 @@ scheduler.cron.expression=${FTP_CRON_EXPRESSION:*/5 * * * * ?}
 
 Toda a implementção encontra-se no arquivo *APDataFileProcessRoute.java* e resume-se a:
 
-* **apdata-file-process-kafka** - rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso.   
+* **apdata-file-process-kafka** - rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso.   ~
 ~~~
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.toprocess}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
