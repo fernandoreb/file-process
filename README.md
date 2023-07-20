@@ -199,7 +199,7 @@ scheduler.cron.expression=${FTP_CRON_EXPRESSION:*/5 * * * * ?}
 
 Toda a implementção encontra-se no arquivo *APDataFileProcessRoute.java* e resume-se a:
 
-* Rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
+* **apdata-file-process-kafka** - rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
 ~~~
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.toprocess}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
@@ -220,7 +220,7 @@ from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directo
      .log("apdata-file-process - envio kafka finalizado");
 ~~~
 
-* Rota que realiza a leitura do diretório FTP com os arquivos que foram movidos pela rota anterior e faz o download para uma pasta local. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
+* **apdata-file-process-fileserver** - rota que realiza a leitura do diretório FTP com os arquivos que foram movidos pela rota anterior e faz o download para uma pasta local. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
 ~~~
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.processed}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
