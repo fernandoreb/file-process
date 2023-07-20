@@ -201,7 +201,6 @@ Toda a implementção encontra-se no arquivo *APDataFileProcessRoute.java* e res
 
 * Rota que realiza a leitura do diretório FTP com os arquivos a serem enviados para o kafka. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
 ~~~
-//rota: ftp pasta processar -> posta conteúdo no kafka -> move arquivo para pasta processado no ftp
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.toprocess}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
      "knownHostsFile={{ftp.known_hosts}}&strictHostKeyChecking={{ftp.strictHostKeyChecking}}&"+
@@ -223,7 +222,6 @@ from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directo
 
 * Rota que realiza a leitura do diretório FTP com os arquivos que foram movidos pela rota anterior e faz o download para uma pasta local. O último parâmetro do componente FTP indica para onde será movido o arquivo, caso a rota seja executada com sucesso. 
 ~~~
-        //rota: ftp pasta processado -> download para diretório -> remove arquivo da pasta processado do ftp     
 from("{{ftp.component}}://{{ftp.user}}@{{ftp.server}}:{{ftp.port}}/{{ftp.directory.processed}}?"+ //1 - leitura de arquivos do ftp
      "password={{ftp.password}}&"+
      "knownHostsFile={{ftp.known_hosts}}&strictHostKeyChecking={{ftp.strictHostKeyChecking}}&"+
